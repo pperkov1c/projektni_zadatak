@@ -3,6 +3,6 @@
 #include "functions.h"
 
 int main() {
-    izbornik("lijekovi.bin");
-    return 0;
+	izbornik("lijekovi.bin");
+	return 0;
 }
