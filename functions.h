@@ -8,8 +8,7 @@ void ispisiSveLijekove(const void* polje);
 void* pretraziLijekove(const void* polje);
 void uredivanjeLijekova(void* polje, const char* ime);
 void brisanjeLijeka(void* polje, const char* ime);
-void sortirajPoCijeni(void* polje);
-void ispisPoCijeni(const void* polje);
+void selectionSortLijekova(LIJEK* polje, int velicinaPolja);
 int izlazIzPrograma(void* polje);
 int izbornik(const char* ime);
 #endif

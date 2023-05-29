@@ -3,7 +3,7 @@
 
 typedef struct { // 3.
 	int id;
-	char ime[25];
+	char ime[30];
 	char proizvodac[40];
 	int kolicina;
 	double cijena;

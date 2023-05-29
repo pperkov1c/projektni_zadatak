@@ -20,7 +20,7 @@ void kreiranjeDatoteke(const char* ime) { // 4.
 	}
 }
 
-void dodajLijek(const char* ime) {
+void dodajLijek(const char* ime) { // 10.
 	FILE* fp = fopen(ime, "rb+");
 
 	if (fp == NULL) {
@@ -156,8 +156,8 @@ void uredivanjeLijekova(void* polje, const char* ime) {
 	}
 
 	fclose(fp);
-}
 
+}
 void brisanjeLijeka(void* polje, const char* ime) {
 	FILE* fp = fopen(ime, "rb+");
 
@@ -198,30 +198,47 @@ void brisanjeLijeka(void* polje, const char* ime) {
 
 	fclose(fp);
 }
+void zamjenaLijekova(LIJEK* const veci, LIJEK* const manji) {
+	LIJEK temp = *manji;
+	*manji = *veci;
+	*veci = temp;
+}
 
-void sortirajPoCijeni(void* polje) {
-	LIJEK* lijekovi = (LIJEK*)polje;
-
-	for (int i = 0; i < brojLijekova - 1; i++) {
-		for (int j = 0; j < brojLijekova - i - 1; j++) {
-			if (lijekovi[j].cijena > lijekovi[j + 1].cijena) {
-				LIJEK temp = lijekovi[j];
-				lijekovi[j] = lijekovi[j + 1];
-				lijekovi[j + 1] = temp;
+void selectionSortLijekova(LIJEK* polje, int velicinaPolja) {
+	int min = -1;
+	for (int i = 0; i < velicinaPolja - 1; i++) {
+		min = i;
+		for (int j = i + 1; j < velicinaPolja; j++) {
+			if (polje[j].id < polje[min].id) {
+				min = j;
 			}
 		}
+		zamjenaLijekova(&polje[i], &polje[min]);
 	}
 }
-
-void ispisPoCijeni(const void* polje) {
-	const LIJEK* lijekovi = (const LIJEK*)polje;
-
-	printf("%-12s | %-20s | %-19s | %-8s | %-6s\n", "ID", "Ime lijeka", "Proizvodac", "Kolicina", "Cijena");
-	printf("------------+-----------------------+---------------------+----------+-------\n");
-	for (int i = 0; i < brojLijekova; i++) {
-		printf("%-12d | %-20s | %-19s | %-8d | %.2lf\n", lijekovi[i].id, lijekovi[i].ime, lijekovi[i].proizvodac, lijekovi[i].kolicina, lijekovi[i].cijena);
-	}
-}
+//void sortirajPoCijeni(void* polje) {
+//	LIJEK* lijekovi = (LIJEK*)polje;
+//
+//	for (int i = 0; i < brojLijekova - 1; i++) {
+//		for (int j = 0; j < brojLijekova - i - 1; j++) {
+//			if (lijekovi[j].cijena > lijekovi[j + 1].cijena) {
+//				LIJEK temp = lijekovi[j];
+//				lijekovi[j] = lijekovi[j + 1];
+//				lijekovi[j + 1] = temp;
+//			}
+//		}
+//	}
+//}
+//
+//void ispisPoCijeni(const void* polje) {
+//	const LIJEK* lijekovi = (const LIJEK*)polje;
+//
+//	printf("%-12s | %-20s | %-19s | %-8s | %-6s\n", "ID", "Ime lijeka", "Proizvodac", "Kolicina", "Cijena");
+//	printf("------------+-----------------------+---------------------+----------+-------\n");
+//	for (int i = 0; i < brojLijekova; i++) {
+//		printf("%-12d | %-20s | %-19s | %-8d | %.2lf\n", lijekovi[i].id, lijekovi[i].ime, lijekovi[i].proizvodac, lijekovi[i].kolicina, lijekovi[i].cijena);
+//	}
+//}
 
 int izlazIzPrograma(void* polje) {
 	LIJEK* lijekovi = (LIJEK*)polje;
