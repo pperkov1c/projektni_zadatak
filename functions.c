@@ -1,14 +1,14 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<math.h>
+#include<time.h>
 #include "Header.h"
 
-static int brojLijekova = 0;
+static int brojLijekova = 0; //5.
 
-void kreiranjeDatoteke(const char* const dat) {
+void kreiranjeDatoteke(const char* const dat) { //10.
 
 	FILE* fp = fopen(dat, "rb");
 
@@ -46,34 +46,34 @@ void dodajLijek(const char* const dat) {
 
 	//upis lijeka u datoteku
 
-	LIJEK temp = { 0 };
+	LIJEK pom = { 0 };
 
-	temp.id = brojLijekova + 1;
+	pom.id = brojLijekova + 1;
 	getchar();
 
-	printf("Unesite ime lijeka: ");
-	scanf("%29[^\n]", temp.naziv);
+	printf("Unesite ime Lijeka: ");
+	scanf("%29[^\n]", pom.naziv);
 	getchar();
 
-	printf("Unesite proizvodaca: ");
-	scanf("%29[^\n]", temp.proizvodac);
+	printf("Unesite proizvodaca lijeka: ");
+	scanf("%29[^\n]", pom.proizvodac);
 	getchar();
 
-	printf("Unesite kolicinu lijeka: ");
-	scanf("%d", &temp.kolicina);
+	printf("Unesite kolicinu lijekova: ");
+	scanf("%d", &pom.kolicina);
 	getchar();
 
 	printf("Unesite cijenu lijeka: ");
-	scanf("%f", &temp.cijena);
+	scanf("%f", &pom.cijena);
 
 	//postavljanje pokazivaca
 
-	fseek(fp, sizeof(LIJEK) * brojLijekova, SEEK_CUR);
-	fwrite(&temp, sizeof(LIJEK), 1, fp);
+	fseek(fp, sizeof(LIJEK) * brojLijekova, SEEK_CUR); //17.
+	fwrite(&pom, sizeof(LIJEK), 1, fp);
 
 	printf("Novi lijek dodan\n");
 
-	rewind(fp);
+	rewind(fp); //17.
 	brojLijekova++;
 
 	fwrite(&brojLijekova, sizeof(int), 1, fp);
@@ -88,7 +88,7 @@ void* ucitajLijekove(const char* const dat) {
 	FILE* fp = fopen(dat, "rb");
 
 	if (fp == NULL) {
-		perror("Ucitavanje");
+		perror("Ucitavanje"); //19.
 		return NULL;
 		exit(EXIT_FAILURE);
 	}
@@ -97,7 +97,7 @@ void* ucitajLijekove(const char* const dat) {
 
 	fread(&brojLijekova, sizeof(int), 1, fp);
 
-	LIJEK* poljeLijekova = (LIJEK*)calloc(brojLijekova, sizeof(LIJEK));
+	LIJEK* poljeLijekova = (LIJEK*)calloc(brojLijekova, sizeof(LIJEK)); //13. i 14.
 
 	if (poljeLijekova == NULL) {
 		printf("Zauzimanje memorije");
@@ -112,7 +112,7 @@ void* ucitajLijekove(const char* const dat) {
 	return poljeLijekova;
 }
 
-void stanjeLijekova(const LIJEK* const poljeLijekova) {
+void stanjeLijekova(const LIJEK* const poljeLijekova) { //11.
 	system("CLS");
 
 	//provjeravanje poljaLijekova
@@ -125,7 +125,7 @@ void stanjeLijekova(const LIJEK* const poljeLijekova) {
 	//ispis lijekova iz niza brojLijekova
 
 	for (int i = 0; i < brojLijekova; i++) {
-		printf("ID: %d  Naziv: %s  Proizvodac: %s  Kolicina na stanju: %d  Cijena: %.2fkn\n\n",
+		printf("ID: %d  Naziv: %s  Proizvodac: %s  Kolicina na stanju: %d  Cijena: %.2fkn \n\n",
 			(poljeLijekova + i)->id,
 			(poljeLijekova + i)->naziv,
 			(poljeLijekova + i)->proizvodac,
@@ -134,7 +134,7 @@ void stanjeLijekova(const LIJEK* const poljeLijekova) {
 	}
 }
 
-void* pretrazivanjeLijekova(LIJEK* const poljeLijekova) {
+void* pretrazivnajeLijeka(LIJEK* const poljeLijekova) {
 
 	system("CLS");
 	//provjera polja
@@ -156,7 +156,7 @@ void* pretrazivanjeLijekova(LIJEK* const poljeLijekova) {
 
 		if (trazeniLijek == (poljeLijekova + i)->id) {
 
-			printf("ID: %d  Naziv: %s  Proizvodac: %s  Kolicina na stanju: %d.  Cijena: %f\n\n",
+			printf("ID: %d  Naziv: %s  Proizvodac: %s  Kolicina na stanju: %d.  Cijena: %fkn\n\n",
 				(poljeLijekova + i)->id,
 				(poljeLijekova + i)->naziv,
 				(poljeLijekova + i)->proizvodac,
@@ -185,7 +185,7 @@ void* pretrazivanjeLijekova(LIJEK* const poljeLijekova) {
 	return NULL;
 }
 
-void pretrazivnajeLijekaIme(LIJEK* const poljeLijekova) {
+void pretrazivnajeLijekaIme(LIJEK* const poljeLijekova) { //21.
 
 	system("CLS");
 
@@ -209,7 +209,7 @@ void pretrazivnajeLijekaIme(LIJEK* const poljeLijekova) {
 
 		if (strcmp(trazeniLijek, (poljeLijekova + i)->naziv) == 0) {
 
-			printf("ID: %d  Naziv: %s  Proizvodac: %s  Kolicina na stanju: %d.  Cijena: %f\n\n",
+			printf("ID: %d  Naziv: %s  Proizvodac: %s  Kolicina na stanju: %d.  Cijena: %fkn\n\n",
 				(poljeLijekova + i)->id,
 				(poljeLijekova + i)->naziv,
 				(poljeLijekova + i)->proizvodac,
@@ -236,7 +236,7 @@ void zamjena(LIJEK* const high, LIJEK* const low) {
 
 }
 
-void sortiranjeLijekova(const LIJEK* poljeLijekova) {
+void sortiranjeLijekova(const LIJEK* poljeLijekova) { //20.
 
 	system("CLS");
 
@@ -262,7 +262,7 @@ void azuriranjeLijeka(LIJEK* poljeLijekova, const char* const dat) {
 
 	system("CLS");
 
-	//provjera poljaLijekova
+	//provjera poljaLijkeova
 
 	if (poljeLijekova == NULL) {
 		printf("Polje prazno\n");
@@ -286,7 +286,7 @@ void azuriranjeLijeka(LIJEK* poljeLijekova, const char* const dat) {
 		scanf("%d", &trazeniId);
 
 		if (trazeniId < 1 || trazeniId > brojLijekova) {
-			printf("Lijek s unesenim ID-em ne postoji. Unesite ID koji postoji: ");
+			printf("Lijek s unesenim ID-em ne postoji.\nUnesite ID koji postoji: ");
 		}
 	} while (trazeniId < 1 || trazeniId > brojLijekova);
 
@@ -355,7 +355,7 @@ void brisanjeLijeka(LIJEK* const poljeLijekova, const char* const dat) {
 		scanf("%d", &trazeniId);
 
 		if (trazeniId < 1 || trazeniId > brojLijekova) {
-			printf("Lijek s unesenim ID-em ne postoji. Unesite ID koji postoji: ");
+			printf("Lijek s unesenim ID-em ne postoji.\nUnesite ID koji postoji: ");
 		}
 	} while (trazeniId < 1 || trazeniId > brojLijekova);
 
@@ -381,18 +381,35 @@ void brisanjeLijeka(LIJEK* const poljeLijekova, const char* const dat) {
 	printf("Lijek je uspjesno obrisan\n");
 
 }
-void brisanjeBaze(LIJEK* polje) {
-	printf("Zelite li pri izlasku programa izbrisati datoteku ili ju ipak zelite zadrzati?\n");
-	printf("Ako zelite izbrisati datoteku napisite obrisi, ako ne zelite napisite zadrzi\n");
-
-	char uvjet[7] = { '\0' };
-	scanf("%6s", uvjet);
-	if (!strcmp("obrisi", uvjet)) {
-		remove("lijekovi.bin") == 0 ? printf("Izbrisali ste datoteku lijekovi.bin.\n") : printf("Datoteka neuspjesno izbrisana ili ona ne postoji.\n");
-		printf("\nIzlaz iz programa.\n");
-		free(polje);
+void promjenaImenaDatoteci(const char* staroImeDatoteke) {
+	char novoImeDatoteke[20] = { '\0' };
+	printf("Unesite novi naziv datoteke!\n");
+	getchar();
+	scanf("%19[^\n]", novoImeDatoteke);
+	printf("Zelite li uistinu promijeniti ime datoteci?\n");
+	printf("Utipkajte \"da\" ako uistinu želite promijeniti ime datoteke u suprotno utipkajte\"ne\"!\n");
+	char potvrda[3] = { '\0' };
+	scanf("%2s", potvrda);
+	if (!strcmp("da", potvrda)) {
+		rename(staroImeDatoteke, novoImeDatoteke) == 0 ? //18.
+			printf("Uspjesno promijenjeno ime datoteci!\n") :
+			printf("Neuspjesno promijenjeno ime datoteci!\n");
 	}
-	else printf("\nZadrzali ste datoteku.\nIzlaz iz programa\n");
 }
 
+void brisanjeDatoteke(const char* lijekoviDat) {
+	printf("Zelite li uistinu obrisati datoteku %s?\n", lijekoviDat);
+	printf("Utipkajte \"da\" ako uistinu zelite obrisati datoteku u suprotno utipkajte\
+\"ne\"!\n");
+	char potvrda[3] = { '\0' };
+	scanf("%2s", potvrda);
+	if (!strcmp("da", potvrda)) {
+		remove(lijekoviDat) == 0 ? printf("Uspjesno obrisana datoteka %s!\n", //18.
+			lijekoviDat) : printf("Neuspjesno brisanje datoteke %s!\n", lijekoviDat);
+	}
+}
 
+int izlazIzPrograma(LIJEK* poljeLijekova) {
+	free(poljeLijekova);
+	return 0;
+}

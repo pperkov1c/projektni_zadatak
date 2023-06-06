@@ -1,12 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <string.h>
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
 #include "Strukture.h"
 #include "Header.h"
 
-int izbornik(const char* const lijekoviDat) {
+int izbornik(const char* const lijekoviDat, const char* const racuniDat) { //8.
 
-	static LIJEK* poljeLijekova = NULL;
+	static LIJEK* poljeLijekova = NULL; //9.
 	static LIJEK* pronadjeniLijek = NULL;
 
 	int odabir = 0;
@@ -14,18 +15,18 @@ int izbornik(const char* const lijekoviDat) {
 
 
 	printf("***************************************\n");
-	printf("          ~ IZBORNIK ~          \n");
+	printf("       ~ BAZA PODATAKA LIJEKOVA ~          \n");
 	printf("***************************************\n");
-	printf("1.  Unos novog lijeka             \n");
-	printf("2.  Stanje svih lijekova u ljekarni  \n");
-	printf("3.  Pretrazivanje lijeka po imenu       \n");
-	printf("4.  Pretrazivanje lijeka po ID-u	       \n");
-	printf("5.  Sortiranje lijekova po cijeni	       \n");
-	printf("6.  Azuriranje lijeka           \n");
-	printf("7.  Brisanje lijeka iz ljekarne	       \n");
-	printf("8.  Brisanje cijele baze podataka \n");
-	printf("9.  Izlaz iz programa         \n");
-	printf("***************************************\n");
+	printf("1. Unos novog lijeka             \n");
+	printf("2. Stanje svih lijekova u ljekarni  \n");
+	printf("3. Pretrazivanje lijeka po imenu       \n");
+	printf("4. Pretrazivanje lijeka po ID-u	       \n");
+	printf("5. Sortiranje lijekova po cijeni	       \n");
+	printf("6. Azuriranje lijeka           \n");
+	printf("7. Brisanje lijeka iz ljekarne	       \n");
+	printf("8. Promjena imena datoteke	       \n");
+	printf("9. Brisanje datoteke      \n");
+	printf("10. Izlaz iz programa         \n");
 
 	scanf("%d", &odabir);
 
@@ -38,7 +39,7 @@ int izbornik(const char* const lijekoviDat) {
 	case 2:
 
 		if (poljeLijekova != NULL) {
-			free(poljeLijekova);
+			free(poljeLijekova); //15.
 			poljeLijekova = NULL;
 		}
 
@@ -70,7 +71,7 @@ int izbornik(const char* const lijekoviDat) {
 
 		poljeLijekova = (LIJEK*)ucitajLijekove(lijekoviDat);
 
-		pretrazivanjeLijekova(poljeLijekova);
+		pretrazivnajeLijeka(poljeLijekova);
 
 		break;
 
@@ -112,12 +113,16 @@ int izbornik(const char* const lijekoviDat) {
 		brisanjeLijeka(poljeLijekova, lijekoviDat);
 
 		break;
-	
 	case 8:
-		brisanjeBaze(poljeLijekova);
-		return 99;
+		promjenaImenaDatoteci(lijekoviDat);
 		break;
-
+		
+	case 9:
+		brisanjeDatoteke(lijekoviDat);
+		break;
+	case 10:
+		odabir = izlazIzPrograma(poljeLijekova);
+		break;
 	default:
 		odabir = 0;
 	}

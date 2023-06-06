@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 #include "Header.h"
 #include "Strukture.h"
 
@@ -9,9 +9,9 @@ int main(void) {
 	int odgovor = 1;
 
 
-	char* datotekaLijekovi = "lijekovi.bin";
+	char* datotekaLijekovi = "lijekovi.bin"; //16.
 
-	kreiranjeDatoteke(datotekaLijekovi);
+	kreiranjeDatoteke(datotekaLijekovi);  
 
 	while (odgovor) {
 		odgovor = izbornik(datotekaLijekovi);
