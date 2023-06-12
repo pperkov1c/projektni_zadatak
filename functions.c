@@ -51,7 +51,7 @@ void dodajLijek(const char* const dat) {
 	pom.id = brojLijekova + 1;
 	getchar();
 
-	printf("Unesite ime Lijeka: ");
+	printf("Unesite ime lijeka: ");
 	scanf("%29[^\n]", pom.naziv);
 	getchar();
 
